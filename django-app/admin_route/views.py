@@ -14,6 +14,8 @@ class Tutorial:
     def add_submission(self, submission):
         self.submissions.append(submission)
 
+saved_tutorials = []
+
 def make_admin_tutorial(request):
     if request.method == 'POST':
         name = request.POST.get('fname')
@@ -31,6 +33,8 @@ def make_admin_tutorial(request):
             hint=hint,
             existingGroups=existing_groups
         )
+
+        saved_tutorials.append(tutorial)
 
         # Store the relevant data in session
         request.session['tutorial_data'] = {
