@@ -24,28 +24,28 @@
 
     <div class="container">
         <aside class="sidebar">
-            <div class="sidebar-item active">
-                <div class="sidebar-icon">T</div>
-                <div>Teacher</div>
+            <div class="sidebar-item active" data-chat="professor">
+                <div class="sidebar-icon">P</div>
+                <div>Professor</div>
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" data-chat="classmates">
                 <div class="sidebar-icon">C</div>
                 <div>Classmates</div>
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" data-chat="groups">
                 <div class="sidebar-icon">G</div>
                 <div>Groups</div>
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" data-chat="support">
                 <div class="sidebar-icon">S</div>
                 <div>Support</div>
             </div>
         </aside>
 
         <main class="main-content">
-            <h1>Chat with Instructor</h1>
+            <h1 id="chat-title">Chat with Professor</h1>
             <div class="chat-container">
-                <div class="chat-messages">
+                <div class="chat-messages" id="professor-chat">
                     <div class="message received">
                         <p>Hello! Do you have any questions about the recent assignments?</p>
                         <span class="timestamp">10:30 AM</span>
@@ -78,6 +78,44 @@
                         <span class="timestamp">10:37 AM</span>
                     </div>
                 </div>
+                <div class="chat-messages" id="classmates-chat" style="display: none;">
+                    <div class="message received">
+                        <p>Hey! Anyone studying for the midterm next week?</p>
+                        <span class="timestamp">9:45 AM</span>
+                    </div>
+                    <div class="message received">
+                        <p>I'm planning to meet at the library tomorrow at 3pm if anyone wants to join.</p>
+                        <span class="timestamp">9:46 AM</span>
+                    </div>
+                    <div class="message sent">
+                        <p>I'll be there! Should we focus on chapters 4-6?</p>
+                        <span class="timestamp">9:50 AM</span>
+                    </div>
+                </div>
+                <div class="chat-messages" id="groups-chat" style="display: none;">
+                    <div class="message received">
+                        <p>Project Group: Let's finalize our presentation for next Tuesday.</p>
+                        <span class="timestamp">2:20 PM</span>
+                    </div>
+                    <div class="message sent">
+                        <p>I finished my part on the research findings. Will upload it tonight!</p>
+                        <span class="timestamp">2:25 PM</span>
+                    </div>
+                </div>
+                <div class="chat-messages" id="support-chat" style="display: none;">
+                    <div class="message received">
+                        <p>Welcome to Technical Support. How can I assist you today?</p>
+                        <span class="timestamp">11:00 AM</span>
+                    </div>
+                    <div class="message sent">
+                        <p>I'm having trouble accessing the online textbook resources. It keeps saying my credentials are invalid.</p>
+                        <span class="timestamp">11:05 AM</span>
+                    </div>
+                    <div class="message received">
+                        <p>I'll help you with that. Can you confirm the email address associated with your account?</p>
+                        <span class="timestamp">11:07 AM</span>
+                    </div>
+                </div>
                 <div class="chat-input">
                     <input type="text" id="message-input" placeholder="Type your message here...">
                     <button id="send-button">Send</button>
@@ -90,10 +128,82 @@
         // Chat functionality
         const messageInput = document.getElementById('message-input');
         const sendButton = document.getElementById('send-button');
-        const chatMessages = document.querySelector('.chat-messages');
+        const chatTitle = document.getElementById('chat-title');
+        const professorChat = document.getElementById('professor-chat');
+        const classmatesChat = document.getElementById('classmates-chat');
+        const groupsChat = document.getElementById('groups-chat');
+        const supportChat = document.getElementById('support-chat');
+        let currentChat = 'professor';
+        
+        // Sidebar functionality
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all sidebar items
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Get chat type from data attribute
+                const chatType = item.getAttribute('data-chat');
+                currentChat = chatType;
+                
+                // Update chat title
+                updateChatTitle(chatType);
+                
+                // Show the corresponding chat and hide others
+                showChat(chatType);
+            });
+        });
+        
+        // Function to update chat title
+        function updateChatTitle(chatType) {
+            const titles = {
+                'professor': 'Chat with Professor',
+                'classmates': 'Chat with Classmates',
+                'groups': 'Group Discussions',
+                'support': 'Technical Support'
+            };
+            
+            chatTitle.textContent = titles[chatType] || 'Chat';
+        }
+        
+        // Function to show the selected chat
+        function showChat(chatType) {
+            // Hide all chats
+            professorChat.style.display = 'none';
+            classmatesChat.style.display = 'none';
+            groupsChat.style.display = 'none';
+            supportChat.style.display = 'none';
+            
+            // Show the selected chat
+            if (chatType === 'professor') {
+                professorChat.style.display = 'block';
+            } else if (chatType === 'classmates') {
+                classmatesChat.style.display = 'block';
+            } else if (chatType === 'groups') {
+                groupsChat.style.display = 'block';
+            } else if (chatType === 'support') {
+                supportChat.style.display = 'block';
+            }
+        }
         
         // Function to add a new message to the chat
         function addMessage(content, isSent) {
+            let activeChat;
+            
+            // Determine which chat to add the message to
+            if (currentChat === 'professor') {
+                activeChat = professorChat;
+            } else if (currentChat === 'classmates') {
+                activeChat = classmatesChat;
+            } else if (currentChat === 'groups') {
+                activeChat = groupsChat;
+            } else if (currentChat === 'support') {
+                activeChat = supportChat;
+            }
+            
             const messageDiv = document.createElement('div');
             messageDiv.className = isSent ? 'message sent' : 'message received';
             
@@ -112,10 +222,10 @@
             timestamp.textContent = `${hours}:${minutes} ${ampm}`;
             
             messageDiv.appendChild(timestamp);
-            chatMessages.appendChild(messageDiv);
+            activeChat.appendChild(messageDiv);
             
             // Scroll to the latest message
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            activeChat.scrollTop = activeChat.scrollHeight;
         }
         
         // Send message when Send button is clicked
@@ -125,19 +235,28 @@
                 addMessage(message, true);
                 messageInput.value = '';
                 
-                // Simulate teacher response after a short delay
+                // Simulate response after a short delay
                 setTimeout(() => {
-                    // Simple response system
+                    // Different responses based on current chat
                     let response;
-                    if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-                        response = "Hello! How can I help you today?";
-                    } else if (message.toLowerCase().includes('thank')) {
-                        response = "You're welcome!";
-                    } else if (message.toLowerCase().includes('homework') || message.toLowerCase().includes('assignment')) {
-                        response = "Is there a specific assignment you're having trouble with?";
-                    } else {
-                        response = "I'll help you with that. Let me get back to you with more information soon.";
+                    if (currentChat === 'professor') {
+                        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+                            response = "Hello! How can I help you with your coursework today?";
+                        } else if (message.toLowerCase().includes('thank')) {
+                            response = "You're welcome! Feel free to ask if you have any other questions.";
+                        } else if (message.toLowerCase().includes('homework') || message.toLowerCase().includes('assignment')) {
+                            response = "Is there a specific assignment you're having trouble with? I'd be happy to provide more guidance.";
+                        } else {
+                            response = "That's a good question. Let me explain that concept in more detail.";
+                        }
+                    } else if (currentChat === 'classmates') {
+                        response = "Hey! That sounds great. Anyone else joining the study session?";
+                    } else if (currentChat === 'groups') {
+                        response = "Thanks for the update! Let's meet online tomorrow to put everything together.";
+                    } else if (currentChat === 'support') {
+                        response = "I've reset your access. Please try logging in again with your student ID as the username and your birthdate (MMDDYYYY) as the temporary password.";
                     }
+                    
                     addMessage(response, false);
                 }, 1000);
             }

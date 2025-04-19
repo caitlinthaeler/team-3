@@ -233,12 +233,14 @@ h1 {
 }
 
 /* Chat page */
-.chat-container {
+chat-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 180px);
+    flex-grow: 1;
+    overflow: hidden;
 }
 
+/* Chat messages area */
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -248,6 +250,7 @@ h1 {
     gap: 15px;
 }
 
+/* Message styling */
 .message {
     max-width: 70%;
     padding: 10px 15px;
@@ -284,6 +287,7 @@ h1 {
     display: block;
 }
 
+/* Chat input area */
 .chat-input {
     display: flex;
     gap: 10px;
@@ -311,6 +315,32 @@ h1 {
 
 .chat-input button:hover {
     background-color: #3b78e7;
+}
+
+/* Make sure all chat messages areas use flex layout */
+#professor-chat, #classmates-chat, #groups-chat, #support-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Fix the display property to preserve the flex layout when visible */
+#professor-chat {
+    display: flex;
+}
+
+#classmates-chat, #groups-chat, #support-chat {
+    display: none;
+}
+
+/* This overrides the inline style when the chat is active */
+#professor-chat[style="display: block;"],
+#classmates-chat[style="display: block;"],
+#groups-chat[style="display: block;"],
+#support-chat[style="display: block;"] {
+    display: flex !important;
 }
 
 /* Games page */
