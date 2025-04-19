@@ -32,6 +32,7 @@ nav {
 .nav-links {
     display: flex;
     gap: 20px;
+    
 }
 
 .nav-links a {
@@ -54,6 +55,20 @@ nav {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: fixed;
     height: calc(100vh - 120px);
+}
+
+.sidebar-profile-pic {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.sidebar-profile-pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ccc;
 }
 
 .sidebar-item {
