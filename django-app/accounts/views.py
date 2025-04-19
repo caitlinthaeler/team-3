@@ -15,9 +15,9 @@ def select_login_role(request):
         student_password = '1'
 
         if role == 'teacher' and username == teacher_username and password == teacher_password:
-            return redirect('teacher_dashboard')
+            return redirect('/student/')
         elif role == 'student' and username == student_username and password == student_password:
-            return redirect('student_dashboard')
+            return redirect('/student/')
         else:
             return HttpResponse("Invalid credentials or role.")
 

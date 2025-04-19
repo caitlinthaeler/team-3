@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Hello from the core app!")
+    return redirect('login')
 
 def teacher_dashboard(request):
     return render(request, 'teacher_dashboard.html')
