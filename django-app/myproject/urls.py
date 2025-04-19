@@ -21,6 +21,6 @@ urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('login/', include('accounts.urls')), #references all login related routes
-    path('admin_tutorial/', include('admin_tutorial.urls'))
+    path('admin_route/', include('admin_route.urls'))
     
 ]

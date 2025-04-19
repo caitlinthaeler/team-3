@@ -11,6 +11,3 @@ def teacher_dashboard(request):
 
 def student_dashboard(request):
     return render(request, 'student_dashboard.html')
-
-def admin_tutorial(request):
-    return render(request, 'admin_tutorial.html')
