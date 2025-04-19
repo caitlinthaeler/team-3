@@ -26,74 +26,344 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-profile-pic">
-                <img src="tomtom.jpg" alt="Profile Picture">
+                <img src="/api/placeholder/100/100" alt="Profile Picture">
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" id="profile-btn">
                 <div class="sidebar-icon">P</div>
                 <div>Profile</div>
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" id="notes-btn">
                 <div class="sidebar-icon">N</div>
                 <div>Notes</div>
             </div>
-            <div class="sidebar-item">
+            <div class="sidebar-item" id="badges-btn">
                 <div class="sidebar-icon">B</div>
                 <div>Badges</div>
             </div>
         </aside>
 
-        <main class="main-content">
-            <h1>My Courses</h1>
-            
-            <!-- Course cards with links to tutorial page -->
-            <a href="tutorialPage.html?course=math" class="course-link">
-                <div class="course-card">
-                    <div class="course-icon">C</div>
-                    <div class="course-info">
-                        <h3>CS3524 (2024-25): Distributed Systems and Security</h3>
-                        <p>A course you shouldn't take</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%;"></div>
+        <main class="main-content" id="main-content-area">
+            <!-- Home Page - Course List -->
+            <div id="courses-section">
+                <h1>My Courses</h1>
+                
+                <a href="tutorialPage.html?course=math" class="course-link" data-course="math">
+                    <div class="course-card">
+                        <div class="course-icon">C</div>
+                        <div class="course-info">
+                            <h3>CS3524 (2024-25): Distributed Systems and Security</h3>
+                            <p>A course you shouldn't take</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="math-progress"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-            
-            <a href="tutorialPage.html?course=science" class="course-link">
-                <div class="course-card">
-                    <div class="course-icon">C</div>
-                    <div class="course-info">
-                        <h3>CS3525 (2024-25): Enterprise Computing And Business</h3>
-                        <p>Not really helpful</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 45%;"></div>
+                </a>
+                
+                <a href="tutorialPage.html?course=science" class="course-link" data-course="science">
+                    <div class="course-card">
+                        <div class="course-icon">C</div>
+                        <div class="course-info">
+                            <h3>CS3525 (2024-25): Enterprise Computing And Business</h3>
+                            <p>Not really helpful</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="science-progress"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-            
-            <a href="tutorialPage.html?course=english" class="course-link">
-                <div class="course-card">
-                    <div class="course-icon">C</div>
-                    <div class="course-info">
-                        <h3>CS3528 (2024-25): Software Engineering And Professional Practice</h3>
-                        <p>Actually likeable</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 90%;"></div>
+                </a>
+                
+                <a href="tutorialPage.html?course=english" class="course-link" data-course="english">
+                    <div class="course-card">
+                        <div class="course-icon">C</div>
+                        <div class="course-info">
+                            <h3>CS3528 (2024-25): Software Engineering And Professional Practice</h3>
+                            <p>Actually likeable</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="english-progress"></div>
+                            </div>
                         </div>
                     </div>
+                </a>
+            </div>
+            
+            <!-- Profile Section (initially hidden) -->
+            <div id="profile-section" style="display: none;">
+                <h1>My Profile</h1>
+                <div class="profile-info">
+                    <h2>Personal Information</h2>
+                    <div class="profile-data">
+                        <strong>Name:</strong> John Doe
+                    </div>
+                    <div class="profile-data">
+                        <strong>Student ID:</strong> STU12345
+                    </div>
+                    <div class="profile-data">
+                        <strong>Email:</strong> john.doe@example.com
+                    </div>
+                    <div class="profile-data">
+                        <strong>Grade Level:</strong> 10th Grade
+                    </div>
                 </div>
-            </a>
+            </div>
+            
+            <!-- Notes Section (initially hidden) -->
+            <div id="notes-section" style="display: none;">
+                <h1>My Notes</h1>
+                
+                <!-- Note Input Form -->
+                <div class="note-input">
+                    <h3>Add New Note</h3>
+                    <input type="text" id="note-title" placeholder="Note Title">
+                    <textarea id="note-content" placeholder="Write your note here..."></textarea>
+                    <button id="save-note">Save Note</button>
+                </div>
+                
+                <!-- Notes Container -->
+                <div id="notes-container">
+                    <!-- Notes will be loaded here dynamically -->
+                </div>
+            </div>
+            
+            <!-- Badges Section (initially hidden) -->
+            <div id="badges-section" style="display: none;">
+                <h1>My Badges</h1>
+                <div class="badges-grid">
+                    <div class="badge-item">
+                        <div class="badge-icon">★</div>
+                        <h3>Math Master</h3>
+                        <p>Completed 10 math assignments</p>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">⚗️</div>
+                        <h3>Science Whiz</h3>
+                        <p>Completed 5 science experiments</p>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">📝</div>
+                        <h3>Essay Expert</h3>
+                        <p>Wrote 3 perfect essays</p>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
     <script>
-        // Add click functionality to course cards
-        document.querySelectorAll('.course-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Allow default behavior (navigate to href)
-                // The course parameter will be passed to the tutorial page
+        // Initialize progress data structure if it doesn't exist
+        function initializeProgressData() {
+            if (!localStorage.getItem('courseProgress')) {
+                const initialProgress = {
+                    math: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false,
+                            4: false
+                        }
+                    },
+                    science: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    },
+                    english: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    }
+                };
+                
+                localStorage.setItem('courseProgress', JSON.stringify(initialProgress));
+            }
+        }
+        
+        // Load progress from localStorage
+        function loadProgress() {
+            initializeProgressData();
+            const progress = JSON.parse(localStorage.getItem('courseProgress'));
+            
+            // Update progress bars on home page
+            document.getElementById('math-progress').style.width = progress.math.overall + '%';
+            document.getElementById('science-progress').style.width = progress.science.overall + '%';
+            document.getElementById('english-progress').style.width = progress.english.overall + '%';
+            
+            return progress;
+        }
+        
+        // Calculate overall progress for a course based on completed tasks
+        function calculateCourseProgress(course) {
+            const progress = JSON.parse(localStorage.getItem('courseProgress'));
+            const tasks = progress[course].tasks;
+            
+            // Count completed tasks
+            let completedTasks = 0;
+            let totalTasks = 0;
+            
+            for (const taskId in tasks) {
+                totalTasks++;
+                if (tasks[taskId]) {
+                    completedTasks++;
+                }
+            }
+            
+            // Calculate percentage
+            const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            // Update progress in storage
+            progress[course].overall = percentage;
+            localStorage.setItem('courseProgress', JSON.stringify(progress));
+            
+            return percentage;
+        }
+        
+        // Load notes from localStorage
+        function loadNotes() {
+            return JSON.parse(localStorage.getItem('userNotes')) || [
+                {
+                    id: 1,
+                    title: "Math - Linear Equations",
+                    content: "Remember to isolate variables when solving equations. Example: 2x + 5 = 15, subtract 5 from both sides, then divide by 2.",
+                    date: "April 15, 2025"
+                },
+                {
+                    id: 2,
+                    title: "Science - Newton's Laws",
+                    content: "First Law: An object at rest stays at rest, and an object in motion stays in motion unless acted on by an external force.",
+                    date: "April 10, 2025"
+                }
+            ];
+        }
+        
+        // Save notes to localStorage
+        function saveNotes(notes) {
+            localStorage.setItem('userNotes', JSON.stringify(notes));
+        }
+        
+        // Render notes in the notes container
+        function renderNotes() {
+            const notes = loadNotes();
+            const container = document.getElementById('notes-container');
+            container.innerHTML = '';
+            
+            notes.forEach(note => {
+                const noteElement = document.createElement('div');
+                noteElement.className = 'note-item';
+                noteElement.dataset.id = note.id;
+                
+                noteElement.innerHTML = `
+                    <div class="note-date">${note.date}</div>
+                    <h3>${note.title}</h3>
+                    <p>${note.content}</p>
+                    <div class="note-actions">
+                        <span class="delete-note" data-id="${note.id}">Delete</span>
+                    </div>
+                `;
+                
+                container.appendChild(noteElement);
             });
+            
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-note').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const noteId = parseInt(this.dataset.id);
+                    deleteNote(noteId);
+                });
+            });
+        }
+        
+        // Add a new note
+        function addNote(title, content) {
+            const notes = loadNotes();
+            const newNote = {
+                id: Date.now(), // Use timestamp as unique ID
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+            };
+            
+            notes.unshift(newNote); // Add to beginning of the array
+            saveNotes(notes);
+            renderNotes();
+        }
+        
+        // Delete a note
+        function deleteNote(noteId) {
+            const notes = loadNotes().filter(note => note.id !== noteId);
+            saveNotes(notes);
+            renderNotes();
+        }
+        
+        // Initialize progress on page load
+        const courseProgress = loadProgress();
+        
+        // Add sidebar functionality
+        document.getElementById('profile-btn').addEventListener('click', function() {
+            document.getElementById('courses-section').style.display = 'none';
+            document.getElementById('notes-section').style.display = 'none';
+            document.getElementById('badges-section').style.display = 'none';
+            document.getElementById('profile-section').style.display = 'block';
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+        
+        document.getElementById('notes-btn').addEventListener('click', function() {
+            document.getElementById('courses-section').style.display = 'none';
+            document.getElementById('profile-section').style.display = 'none';
+            document.getElementById('badges-section').style.display = 'none';
+            document.getElementById('notes-section').style.display = 'block';
+            
+            // Render notes when switching to notes section
+            renderNotes();
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+        
+        document.getElementById('badges-btn').addEventListener('click', function() {
+            document.getElementById('courses-section').style.display = 'none';
+            document.getElementById('profile-section').style.display = 'none';
+            document.getElementById('notes-section').style.display = 'none';
+            document.getElementById('badges-section').style.display = 'block';
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+        
+        // Add note functionality
+        document.getElementById('save-note').addEventListener('click', function() {
+            const titleInput = document.getElementById('note-title');
+            const contentInput = document.getElementById('note-content');
+            
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            
+            if (title && content) {
+                addNote(title, content);
+                
+                // Clear the form
+                titleInput.value = '';
+                contentInput.value = '';
+            } else {
+                alert('Please enter both a title and content for your note.');
+            }
         });
     </script>
 </body>
