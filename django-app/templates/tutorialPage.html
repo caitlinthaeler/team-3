@@ -25,7 +25,7 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-profile-pic">
-                <img src="tomtom.jpg" alt="Profile Picture">
+                <img src="/api/placeholder/100/100" alt="Profile Picture">
             </div>
             <div class="sidebar-item">
                 <div class="sidebar-icon">P</div>
@@ -50,7 +50,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 100%;"></div>
+                                <div class="progress-fill" id="math-step-1-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=math&task=1" class="btn">Go to Tasks</a>
@@ -62,7 +62,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 80%;"></div>
+                                <div class="progress-fill" id="math-step-2-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=math&task=2" class="btn">Go to Tasks</a>
@@ -74,7 +74,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 50%;"></div>
+                                <div class="progress-fill" id="math-step-3-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=math&task=3" class="btn">Go to Tasks</a>
@@ -86,7 +86,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 20%;"></div>
+                                <div class="progress-fill" id="math-step-4-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=math&task=4" class="btn">Go to Tasks</a>
@@ -104,7 +104,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 90%;"></div>
+                                <div class="progress-fill" id="science-step-1-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=science&task=1" class="btn">Go to Tasks</a>
@@ -116,7 +116,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%;"></div>
+                                <div class="progress-fill" id="science-step-2-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=science&task=2" class="btn">Go to Tasks</a>
@@ -128,7 +128,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 30%;"></div>
+                                <div class="progress-fill" id="science-step-3-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=science&task=3" class="btn">Go to Tasks</a>
@@ -146,7 +146,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 100%;"></div>
+                                <div class="progress-fill" id="english-step-1-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=english&task=1" class="btn">Go to Tasks</a>
@@ -158,7 +158,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 85%;"></div>
+                                <div class="progress-fill" id="english-step-2-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=english&task=2" class="btn">Go to Tasks</a>
@@ -170,7 +170,7 @@
                         <div class="step-content">
                             <p>...</p>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 70%;"></div>
+                                <div class="progress-fill" id="english-step-3-progress"></div>
                             </div>
                             <div class="step-actions">
                                 <a href="taskPage.html?course=english&task=3" class="btn">Go to Tasks</a>
@@ -183,6 +183,57 @@
     </div>
 
     <script>
+        // Initialize progress data structure if it doesn't exist
+        function initializeProgressData() {
+            if (!localStorage.getItem('courseProgress')) {
+                const initialProgress = {
+                    math: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false,
+                            4: false
+                        }
+                    },
+                    science: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    },
+                    english: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    }
+                };
+                
+                localStorage.setItem('courseProgress', JSON.stringify(initialProgress));
+            }
+        }
+        
+        // Update progress bars for tutorial steps
+        function updateTutorialProgress(course) {
+            initializeProgressData();
+            const progress = JSON.parse(localStorage.getItem('courseProgress'));
+            const tasks = progress[course].tasks;
+            
+            // Update individual step progress
+            for (const taskId in tasks) {
+                const progressElement = document.getElementById(`${course}-step-${taskId}-progress`);
+                if (progressElement) {
+                    // Each step is either 0% (not done) or 100% (done)
+                    progressElement.style.width = tasks[taskId] ? '100%' : '0%';
+                }
+            }
+        }
+        
         // Get the course parameter from URL
         const urlParams = new URLSearchParams(window.location.search);
         const course = urlParams.get('course');
@@ -195,13 +246,17 @@
             
             if (course === 'math') {
                 document.getElementById('math-tutorials').style.display = 'block';
+                updateTutorialProgress('math');
             } else if (course === 'science') {
                 document.getElementById('science-tutorials').style.display = 'block';
+                updateTutorialProgress('science');
             } else if (course === 'english') {
                 document.getElementById('english-tutorials').style.display = 'block';
+                updateTutorialProgress('english');
             } else {
                 // Default to math if invalid course
                 document.getElementById('math-tutorials').style.display = 'block';
+                updateTutorialProgress('math');
             }
         }
     </script>

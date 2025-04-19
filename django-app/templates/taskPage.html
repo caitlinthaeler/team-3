@@ -25,7 +25,7 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-profile-pic">
-                <img src="tomtom.jpg" alt="Profile Picture">
+                <img src="/api/placeholder/100/100" alt="Profile Picture">
             </div>
             <div class="sidebar-item">
                 <div class="sidebar-icon">P</div>
@@ -142,62 +142,152 @@
     </div>
 
     <script>
-        // Get the course and task parameters from URL
+        // Get course and task from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const course = urlParams.get('course');
-        const taskId = urlParams.get('task');
-        
-        // Show the appropriate tasks based on the course parameter
-        if (course) {
+        const course = urlParams.get('course') || 'math';
+
+        // Initialize progress data structure if it doesn't exist
+        function initializeProgressData() {
+            if (!localStorage.getItem('courseProgress')) {
+                const initialProgress = {
+                    math: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false,
+                            4: false
+                        }
+                    },
+                    science: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    },
+                    english: {
+                        overall: 0,
+                        tasks: {
+                            1: false,
+                            2: false,
+                            3: false
+                        }
+                    }
+                };
+                
+                localStorage.setItem('courseProgress', JSON.stringify(initialProgress));
+            }
+        }
+
+        // Calculate overall progress for a course based on completed tasks
+        function calculateCourseProgress(course) {
+            const progress = JSON.parse(localStorage.getItem('courseProgress'));
+            const tasks = progress[course].tasks;
+            
+            // Count completed tasks
+            let completedTasks = 0;
+            let totalTasks = 0;
+            
+            for (const taskId in tasks) {
+                totalTasks++;
+                if (tasks[taskId]) {
+                    completedTasks++;
+                }
+            }
+            
+            // Calculate percentage
+            const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            // Update progress in storage
+            progress[course].overall = percentage;
+            localStorage.setItem('courseProgress', JSON.stringify(progress));
+            
+            return percentage;
+        }
+
+        // Update the task checkboxes to reflect saved progress
+        function updateTaskCheckboxes() {
+            initializeProgressData();
+            const progress = JSON.parse(localStorage.getItem('courseProgress'));
+            
+            // Show the appropriate course tasks based on URL parameter
             document.querySelectorAll('.course-tasks').forEach(tasks => {
                 tasks.style.display = 'none';
             });
             
-            if (course === 'math') {
-                document.getElementById('math-tasks').style.display = 'block';
-            } else if (course === 'science') {
-                document.getElementById('science-tasks').style.display = 'block';
-            } else if (course === 'english') {
-                document.getElementById('english-tasks').style.display = 'block';
+            const courseTasksElement = document.getElementById(`${course}-tasks`);
+            if (courseTasksElement) {
+                courseTasksElement.style.display = 'block';
             } else {
                 // Default to math if invalid course
                 document.getElementById('math-tasks').style.display = 'block';
             }
-        }
-        
-        // Highlight specific task if task parameter is provided
-        if (taskId) {
-            const activeTasksDiv = document.querySelector('.course-tasks[style="display: block;"]') || 
-                                  document.getElementById('math-tasks');
             
-            const targetTask = activeTasksDiv.querySelector(`.task-item[data-task-id="${taskId}"]`);
-            if (targetTask) {
-                targetTask.classList.add('highlight');
-                targetTask.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-        
-        // Add click functionality to task checkboxes
-        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('click', function() {
-                if (this.textContent === '□') {
-                    this.textContent = '✓';
-                    this.classList.add('checked');
-                } else {
-                    this.textContent = '□';
-                    this.classList.remove('checked');
-                }
+            // Update checkbox appearances
+            document.querySelectorAll('.task-item').forEach(task => {
+                const taskId = task.dataset.taskId;
+                const checkbox = task.querySelector('.task-checkbox');
                 
-                // Update progress (in a real app, this would save to server)
-                updateProgress();
+                if (progress[course].tasks[taskId]) {
+                    checkbox.innerHTML = '✓';
+                    checkbox.classList.add('checked');
+                    task.classList.add('completed');
+                } else {
+                    checkbox.innerHTML = '□';
+                    checkbox.classList.remove('checked');
+                    task.classList.remove('completed');
+                }
             });
-        });
-        
-        // Function to update progress (placeholder implementation)
-        function updateProgress() {
-            // This would calculate progress and update progress bars
-            console.log('Progress updated');
         }
+
+        // Add click event listeners to checkboxes
+        function setupCheckboxListeners() {
+            document.querySelectorAll('.task-item').forEach(taskItem => {
+                // Make the entire task item clickable
+                taskItem.addEventListener('click', function() {
+                    const taskId = this.dataset.taskId;
+                    
+                    // Toggle task completion
+                    const progress = JSON.parse(localStorage.getItem('courseProgress'));
+                    progress[course].tasks[taskId] = !progress[course].tasks[taskId];
+                    localStorage.setItem('courseProgress', JSON.stringify(progress));
+                    
+                    // Update UI
+                    updateTaskCheckboxes();
+                    
+                    // Recalculate overall progress
+                    calculateCourseProgress(course);
+                });
+                
+                // For checkbox specific clicks (to prevent potential issues with nested elements)
+                const checkbox = taskItem.querySelector('.task-checkbox');
+                checkbox.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the taskItem click from also firing
+                    
+                    const taskId = taskItem.dataset.taskId;
+                    
+                    // Toggle task completion
+                    const progress = JSON.parse(localStorage.getItem('courseProgress'));
+                    progress[course].tasks[taskId] = !progress[course].tasks[taskId];
+                    localStorage.setItem('courseProgress', JSON.stringify(progress));
+                    
+                    // Update UI
+                    updateTaskCheckboxes();
+                    
+                    // Recalculate overall progress
+                    calculateCourseProgress(course);
+                });
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProgressData();
+            updateTaskCheckboxes();
+            setupCheckboxListeners();
+        });
     </script>
 </body>
 </html>
