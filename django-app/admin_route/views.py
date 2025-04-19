@@ -31,3 +31,6 @@ def make_admin_tutorial(request):
         )
         return redirect('success')
     return render(request, 'admin_tutorial.html')
+
+def display_sucess(request):
+    render(request, 'success.html')
