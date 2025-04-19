@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Create a new Tutorial</title>
+        <script>
+            function toggleGroupsCheckbox() {
+                const collab = document.getElementById("collaborative");
+                const existing = document.getElementById("existing");
+
+                if (collab.checked) {
+                    existing.style.display = "block";
+                } else {
+                    existing.style.display = "none";
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>Create a new Tutorial</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div id="tutorial_title">
+                <label for="fname">Enter Title: </label>
+                <input type="text" id="fname" name="fname"><br>
+            </div>
+            <div id="file">
+                <label for="fileUpload" > Upload Instructions </label><br>
+                <input type="file" id="fileUpload"/><br>
+            </div>
+            <div id="hints">
+                <label for="hint">Add a hint for this tutorial:</label><br>
+                <input type="text" id="hint" name="hint">
+            </div>
+            <div id="tutorial_type">
+                <label>Tutorial Type: </label>
+                <input type="radio" id="individual" name="ass_type" value="individual" onclick="toggleGroupsCheckbox()" checked>
+                <label for="individual">individual</label>
+                <input type="radio" id="collaborative" name="ass_type" value="collaborative" onclick="toggleGroupsCheckbox()">
+                <label for="collaborative">collaborative</label><br>
+                <div id = "existing" style="display: none;">
+                    <label for="groups">Use Existing Groups?</label>
+                    <input type="checkbox" id="groups" name="groups" value="yes">
+                </div>
+
+                <br><input type="submit" value="Submit">
+            </div>
+        </form>
+    </body>
+</html>
