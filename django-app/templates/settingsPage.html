@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educational Platform - Tutorials</title>
+    <title>Educational Platform - Settings</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
                 <a href="homePage.html">Home</a>
                 <a href="chatPage.html">Chat</a>
                 <a href="gamePage.html">Games</a>
-                <a href="settingsPage.html">Settings</a>
+                <a href="settingsPage.html" class="active">Settings</a>
             </div>
             <div class="user-profile">
                 <span>Student Account</span>
@@ -25,7 +25,7 @@
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-profile-pic">
-                <img src="tomtom.jpg" alt="Profile Picture">
+                <img src="tomtom.jpg" alt="Profile Picture" id="sidebar-profile-image">
             </div>
             <div class="sidebar-item">
                 <div class="sidebar-icon">P</div>
@@ -42,33 +42,291 @@
         </aside>
 
         <main class="main-content">
+            <div id="successMessage" class="success-message" style="display: none;">Settings updated successfully!</div>
+            
             <h1>Settings</h1>
+            
             <div class="settings-section">
                 <h2>Account Settings</h2>
-                <form action="/update_settings" method="POST">
+                <div class="settings-row">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-
+                    <input type="text" id="username" value="student2025">
+                </div>
+                <div class="settings-row">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <button type="submit">Update Settings</button>
-                </form>
+                    <input type="email" id="email" value="student@example.com">
+                </div>
+                <div class="settings-row">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" value="••••••••">
+                    <button class="btn" id="changePasswordBtn">Change</button>
+                </div>
+                <div class="settings-row">
+                    <label>Profile Image:</label>
+                    <div class="file-upload">
+                        <div class="profile-image-preview">
+                            <img src="tomtom.jpg" alt="Profile" id="preview-profile-image">
+                        </div>
+                        <label for="profileImage" class="file-upload-btn">Choose File</label>
+                        <input type="file" id="profileImage" style="display: none;">
+                    </div>
+                </div>
             </div>
-
-            <h2>Theme Settings</h2>
-            <form action="/update_theme" method="POST">
-                <label for="theme">Select Theme:</label>
-                <select id="theme" name="theme">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                </select>
-
-                <button type="submit">Apply Theme</button>
-            </form>
+            
+            <div class="settings-section">
+                <h2>Theme Settings</h2>
+                <div class="settings-row">
+                    <label for="themeSelect">Select Theme:</label>
+                    <select id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                    <button class="btn" id="applyThemeBtn">Apply Theme</button>
+                </div>
+                <div class="theme-preview">
+                    <div class="theme-option active" data-theme="light">
+                        <div class="theme-option-inner">
+                            <div class="theme-header"></div>
+                            <div class="theme-body"></div>
+                            <div class="theme-sidebar"></div>
+                        </div>
+                    </div>
+                    <div class="theme-option" data-theme="dark">
+                        <div class="theme-option-inner">
+                            <div class="theme-header"></div>
+                            <div class="theme-body"></div>
+                            <div class="theme-sidebar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-row" style="margin-top: 20px;">
+                    <label>Accent Color:</label>
+                </div>
+                <div class="color-options">
+                    <div class="color-option active" style="background-color: #6c7df0;" data-color="#6c7df0"></div>
+                    <div class="color-option" style="background-color: #f06c6c;" data-color="#f06c6c"></div>
+                    <div class="color-option" style="background-color: #6cf0a0;" data-color="#6cf0a0"></div>
+                    <div class="color-option" style="background-color: #f0da6c;" data-color="#f0da6c"></div>
+                    <div class="color-option" style="background-color: #c76cf0;" data-color="#c76cf0"></div>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Notification Settings</h2>
+                <div class="notifications-options">
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="emailNotifications" checked>
+                        <label for="emailNotifications">Email Notifications</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="pushNotifications" checked>
+                        <label for="pushNotifications">Push Notifications</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="courseUpdates" checked>
+                        <label for="courseUpdates">Course Updates</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="messageNotifications" checked>
+                        <label for="messageNotifications">Message Notifications</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="save-section">
+                <button class="save-btn" id="saveSettingsBtn">Save All Settings</button>
             </div>
         </main>
     </div>
 
+    <script>
+        // Theme switching functionality
+        const themeSelect = document.getElementById('themeSelect');
+        const applyThemeBtn = document.getElementById('applyThemeBtn');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Set initial theme from localStorage or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.className = savedTheme === 'dark' ? 'dark-theme' : '';
+        themeSelect.value = savedTheme;
+        
+        // Set initial accent color from localStorage or default
+        const savedColor = localStorage.getItem('accentColor') || '#6c7df0';
+        document.documentElement.style.setProperty('--primary-color', savedColor);
+        
+        // Update active theme option
+        themeOptions.forEach(option => {
+            if (option.dataset.theme === savedTheme) {
+                option.classList.add('active');
+            } else {
+                option.classList.remove('active');
+            }
+        });
+        
+        // Update active color option
+        colorOptions.forEach(option => {
+            if (option.dataset.color === savedColor) {
+                option.classList.add('active');
+            } else {
+                option.classList.remove('active');
+            }
+        });
+        
+        // Theme option click handler
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+                themeSelect.value = theme;
+                
+                // Remove active class from all options
+                themeOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                option.classList.add('active');
+            });
+        });
+        
+        // Color option click handler
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const color = option.dataset.color;
+                
+                // Remove active class from all options
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                option.classList.add('active');
+                
+                // Apply color
+                document.documentElement.style.setProperty('--primary-color', color);
+            });
+        });
+        
+        // Apply theme button click handler
+        applyThemeBtn.addEventListener('click', () => {
+            const theme = themeSelect.value;
+            
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+            
+            // Save theme to localStorage
+            localStorage.setItem('theme', theme);
+            
+            // Show success message briefly
+            successMessage.style.display = 'block';
+            successMessage.textContent = 'Theme applied successfully!';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+        
+        // Save settings button click handler
+        saveSettingsBtn.addEventListener('click', () => {
+            // Get all settings values
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const theme = themeSelect.value;
+            const activeColor = document.querySelector('.color-option.active').dataset.color;
+            
+            // Save all settings to localStorage
+            localStorage.setItem('username', username);
+            localStorage.setItem('email', email);
+            localStorage.setItem('theme', theme);
+            localStorage.setItem('accentColor', activeColor);
+            
+            // Notification settings
+            localStorage.setItem('emailNotifications', document.getElementById('emailNotifications').checked);
+            localStorage.setItem('pushNotifications', document.getElementById('pushNotifications').checked);
+            localStorage.setItem('courseUpdates', document.getElementById('courseUpdates').checked);
+            localStorage.setItem('messageNotifications', document.getElementById('messageNotifications').checked);
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            successMessage.textContent = 'Settings updated successfully!';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+        
+        // Change password button click handler
+        document.getElementById('changePasswordBtn').addEventListener('click', () => {
+            const currentPassword = prompt('Enter your current password:');
+            if (currentPassword) {
+                const newPassword = prompt('Enter your new password:');
+                if (newPassword) {
+                    const confirmPassword = prompt('Confirm your new password:');
+                    if (newPassword === confirmPassword) {
+                        // Password would be updated on the server in a real application
+                        document.getElementById('password').value = '••••••••';
+                        
+                        // Show success message
+                        successMessage.style.display = 'block';
+                        successMessage.textContent = 'Password updated successfully!';
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    } else {
+                        alert('Passwords did not match. Please try again.');
+                    }
+                }
+            }
+        });
+        
+        // Profile image upload handler
+        document.getElementById('profileImage').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Update the profile images
+                    document.getElementById('preview-profile-image').src = e.target.result;
+                    document.getElementById('sidebar-profile-image').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Load saved user data on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUsername = localStorage.getItem('username');
+            const savedEmail = localStorage.getItem('email');
+            
+            if (savedUsername) {
+                document.getElementById('username').value = savedUsername;
+            }
+            
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail;
+            }
+            
+            // Load notification settings
+            if (localStorage.getItem('emailNotifications') === 'false') {
+                document.getElementById('emailNotifications').checked = false;
+            }
+            
+            if (localStorage.getItem('pushNotifications') === 'false') {
+                document.getElementById('pushNotifications').checked = false;
+            }
+            
+            if (localStorage.getItem('courseUpdates') === 'false') {
+                document.getElementById('courseUpdates').checked = false;
+            }
+            
+            if (localStorage.getItem('messageNotifications') === 'false') {
+                document.getElementById('messageNotifications').checked = false;
+            }
+            
+            const activityVisibility = localStorage.getItem('activityVisibility');
+            if (activityVisibility) {
+                document.getElementById('activityVisibility').value = activityVisibility;
+            }
+        });
+    </script>
 </body>
 </html>
