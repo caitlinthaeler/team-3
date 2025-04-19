@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Platform - Games</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Educational Platform</div>
+            <div class="nav-links">
+                <a href="homePage.html">Home</a>
+                <a href="tutorialPage.html">Tutorials</a>
+                <a href="taskPage.html">Tasks</a>
+                <a href="chatPage.html">Chat</a>
+                <a href="gamePage.html" class="active">Games</a>
+            </div>
+            <div class="user-profile">
+                <span>👤 Student</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-item">
+                <div class="sidebar-icon">M</div>
+                <div>Math Games</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">S</div>
+                <div>Science Games</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">L</div>
+                <div>Language Games</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">A</div>
+                <div>All Games</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">R</div>
+                <div>Rewards</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>Educational Games</h1>
+            <p class="games-intro">Complete assignments to unlock more games!</p>
+            
+            <div class="progress-info">
+                <div class="progress-bar overall-progress">
+                    <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+                <div class="progress-text">3/6 Games Unlocked</div>
+            </div>
+            
+            <div class="games-grid">
+                <div class="game-card" onclick="playGame('math-quiz')">
+                    <span class="game-icon">➕</span>
+                    <div class="game-title">Math Quiz</div>
+                </div>
+                <div class="game-card" onclick="playGame('division-challenge')">
+                    <span class="game-icon">➗</span>
+                    <div class="game-title">Division Challenge</div>
+                </div>
+                <div class="game-card" onclick="playGame('number-sequence')">
+                    <span class="game-icon">🔢</span>
+                    <div class="game-title">Number Sequence</div>
+                </div>
+                <div class="game-card game-locked">
+                    <span class="game-icon">⚗️</span>
+                    <div class="game-title">Chemistry Lab</div>
+                    <div class="unlock-info">Complete Science Assignment 2</div>
+                </div>
+                <div class="game-card game-locked">
+                    <span class="game-icon">📝</span>
+                    <div class="game-title">Word Builder</div>
+                    <div class="unlock-info">Complete English Assignment 2</div>
+                </div>
+                <div class="game-card game-locked">
+                    <span class="game-icon">🌍</span>
+                    <div class="game-title">Geography Explorer</div>
+                    <div class="unlock-info">Complete 75% of all assignments</div>
+                </div>
+            </div>
+            
+            <div id="game-container" style="display: none;">
+                <div class="game-header">
+                    <h2 id="active-game-title">Game Title</h2>
+                    <button id="close-game">Close Game</button>
+                </div>
+                <div id="game-content">
+                    <!-- Game content will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Game functionality
+        const gameContainer = document.getElementById('game-container');
+        const activeGameTitle = document.getElementById('active-game-title');
+        const gameContent = document.getElementById('game-content');
+        const closeGameBtn = document.getElementById('close-game');
+        
+        // Function to "play" a game (in a real app, this would load the actual game)
+        function playGame(gameId) {
+            gameContainer.style.display = 'block';
+            
+            // Set the game title
+            let title = '';
+            switch(gameId) {
+                case 'math-quiz':
+                    title = 'Math Quiz';
+                    gameContent.innerHTML = createMathGame();
+                    initMathGame();
+                    break;
+                case 'division-challenge':
+                    title = 'Division Challenge';
+                    gameContent.innerHTML = '<div class="placeholder-game">Division Challenge Game Content</div>';
+                    break;
+                case 'number-sequence':
+                    title = 'Number Sequence';
+                    gameContent.innerHTML = '<div class="placeholder-game">Number Sequence Game Content</div>';
+                    break;
+                default:
+                    title = 'Educational Game';
+                    gameContent.innerHTML = '<div class="placeholder-game">Game Content</div>';
+            }
+            
+            activeGameTitle.textContent = title;
+        }
+        
+        // Close the active game
+        closeGameBtn.addEventListener('click', () => {
+            gameContainer.style.display = 'none';
+            gameContent.innerHTML = '';
+        });
+        
+        // Create a simple math quiz game
+        function createMathGame() {
+            return `
+                <div class="math-game">
+                    <div class="score-container">Score: <span id="score">0</span></div>
+                    <div class="problem-container">
+                        <span id="num1">?</span> + <span id="num2">?</span> = ?
+                    </div>
+                    <div class="answers-container">
+                        <button class="answer-btn" id="answer1">?</button>
+                        <button class="answer-btn" id="answer2">?</button>
+                        <button class="answer-btn" id="answer3">?</button>
+                        <button class="answer-btn" id="answer4">?</button>
+                    </div>
+                    <div class="game-feedback" id="feedback"></div>
+                </div>
+            `;
+        }
+        
+        // Initialize the math game
+        function initMathGame() {
+            let score = 0;
+            const scoreElement = document.getElementById('score');
+            const num1Element = document.getElementById('num1');
+            const num2Element = document.getElementById('num2');
+            const feedback = document.getElementById('feedback');
+            const answerBtns = [
+                document.getElementById('answer1'),
+                document.getElementById('answer2'),
+                document.getElementById('answer3'),
+                document.getElementById('answer4')
+            ];
+            
+            let correctAnswer = 0;
+            
+            // Generate a new math problem
+            function newProblem() {
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * 10) + 1;
+                correctAnswer = num1 + num2;
+                
+                num1Element.textContent = num1;
+                num2Element.textContent = num2;
+                
+                // Generate answer options (including the correct one)
+                const answers = [correctAnswer];
+                while (answers.length < 4) {
+                    const wrongAnswer = Math.floor(Math.random() * 20) + 1;
+                    if (!answers.includes(wrongAnswer)) {
+                        answers.push(wrongAnswer);
+                    }
+                }
+                
+                // Shuffle the answers
+                answers.sort(() => Math.random() - 0.5);
+                
+                // Set answer buttons text
+                for (let i = 0; i < 4; i++) {
+                    answerBtns[i].textContent = answers[i];
+                    
+                    // Add click event
+                    answerBtns[i].onclick = function() {
+                        if (parseInt(this.textContent) === correctAnswer) {
+                            score++;
+                            scoreElement.textContent = score;
+                            feedback.textContent = "Correct!";
+                            feedback.style.color = "green";
+                            
+                            // Generate a new problem after a short delay
+                            setTimeout(newProblem, 1000);
+                        } else {
+                            feedback.textContent = "Wrong answer. Try again!";
+                            feedback.style.color = "red";
+                        }
+                    };
+                }
+            }
+            
+            // Start with an initial problem
+            newProblem();
+        }
+    </script>
+</body>
+</html>

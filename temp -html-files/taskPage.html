@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Platform - Tasks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Educational Platform</div>
+            <div class="nav-links">
+                <a href="homePage.html">Home</a>
+                <a href="tutorialPage.html">Tutorials</a>
+                <a href="taskPage.html" class="active">Tasks</a>
+                <a href="chatPage.html">Chat</a>
+                <a href="gamePage.html">Games</a>
+            </div>
+            <div class="user-profile">
+                <span>👤 Student</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-item">
+                <div class="sidebar-icon">N</div>
+                <div>Notes</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">A</div>
+                <div>Assignments</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">G</div>
+                <div>Grades</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">R</div>
+                <div>Resources</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">S</div>
+                <div>Settings</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div id="math-tasks" class="course-tasks">
+                <h1>Mathematics 101 - Tasks</h1>
+                <div class="task-list">
+                    <div class="task-item" data-task-id="1">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 1: Basic Algebra Operations</h3>
+                            <p>Complete the practice problems on basic algebra operations</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="2">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 2: Linear Equations</h3>
+                            <p>Complete the practice problems on solving linear equations</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="3">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 3: Graphing Functions</h3>
+                            <p>Complete the practice problems on graphing linear functions</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="4">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 4: Systems of Equations</h3>
+                            <p>Complete the practice problems on solving systems of equations</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-actions">
+                    <a href="tutorialPage.html?course=math" class="btn">Back to Tutorials</a>
+                </div>
+            </div>
+            
+            <div id="science-tasks" class="course-tasks" style="display: none;">
+                <h1>Science 101 - Tasks</h1>
+                <div class="task-list">
+                    <div class="task-item" data-task-id="1">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 1: Physics Problems</h3>
+                            <p>Complete the practice problems on Newton's laws of motion</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="2">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 2: Chemistry Lab</h3>
+                            <p>Complete the virtual chemistry lab experiments</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="3">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 3: Lab Safety Quiz</h3>
+                            <p>Complete the safety procedures quiz with at least 80% score</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-actions">
+                    <a href="tutorialPage.html?course=science" class="btn">Back to Tutorials</a>
+                </div>
+            </div>
+            
+            <div id="english-tasks" class="course-tasks" style="display: none;">
+                <h1>English 101 - Tasks</h1>
+                <div class="task-list">
+                    <div class="task-item" data-task-id="1">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 1: Grammar Exercises</h3>
+                            <p>Complete the grammar practice worksheets</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="2">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 2: Essay Writing</h3>
+                            <p>Write a 500-word persuasive essay on the assigned topic</p>
+                        </div>
+                    </div>
+                    <div class="task-item" data-task-id="3">
+                        <div class="task-checkbox">□</div>
+                        <div class="task-info">
+                            <h3>Assignment 3: Literary Analysis</h3>
+                            <p>Write a 2-page analysis of the assigned short story</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-actions">
+                    <a href="tutorialPage.html?course=english" class="btn">Back to Tutorials</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Get the course and task parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const course = urlParams.get('course');
+        const taskId = urlParams.get('task');
+        
+        // Show the appropriate tasks based on the course parameter
+        if (course) {
+            document.querySelectorAll('.course-tasks').forEach(tasks => {
+                tasks.style.display = 'none';
+            });
+            
+            if (course === 'math') {
+                document.getElementById('math-tasks').style.display = 'block';
+            } else if (course === 'science') {
+                document.getElementById('science-tasks').style.display = 'block';
+            } else if (course === 'english') {
+                document.getElementById('english-tasks').style.display = 'block';
+            } else {
+                // Default to math if invalid course
+                document.getElementById('math-tasks').style.display = 'block';
+            }
+        }
+        
+        // Highlight specific task if task parameter is provided
+        if (taskId) {
+            const activeTasksDiv = document.querySelector('.course-tasks[style="display: block;"]') || 
+                                  document.getElementById('math-tasks');
+            
+            const targetTask = activeTasksDiv.querySelector(`.task-item[data-task-id="${taskId}"]`);
+            if (targetTask) {
+                targetTask.classList.add('highlight');
+                targetTask.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        
+        // Add click functionality to task checkboxes
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                if (this.textContent === '□') {
+                    this.textContent = '✓';
+                    this.classList.add('checked');
+                } else {
+                    this.textContent = '□';
+                    this.classList.remove('checked');
+                }
+                
+                // Update progress (in a real app, this would save to server)
+                updateProgress();
+            });
+        });
+        
+        // Function to update progress (placeholder implementation)
+        function updateProgress() {
+            // This would calculate progress and update progress bars
+            console.log('Progress updated');
+        }
+    </script>
+</body>
+</html>

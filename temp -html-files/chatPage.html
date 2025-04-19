@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Platform - Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Educational Platform</div>
+            <div class="nav-links">
+                <a href="homePage.html">Home</a>
+                <a href="tutorialPage.html">Tutorials</a>
+                <a href="taskPage.html">Tasks</a>
+                <a href="chatPage.html" class="active">Chat</a>
+                <a href="gamePage.html">Games</a>
+            </div>
+            <div class="user-profile">
+                <span>👤 Student</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-item active">
+                <div class="sidebar-icon">T</div>
+                <div>Teacher</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">C</div>
+                <div>Classmates</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">G</div>
+                <div>Groups</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">S</div>
+                <div>Support</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>Chat with Instructor</h1>
+            <div class="chat-container">
+                <div class="chat-messages">
+                    <div class="message received">
+                        <p>Hello! Do you have any questions about the recent assignments?</p>
+                        <span class="timestamp">10:30 AM</span>
+                    </div>
+                    <div class="message sent">
+                        <p>Yes, I'm having trouble with the systems of equations. Could you explain the substitution method again?</p>
+                        <span class="timestamp">10:32 AM</span>
+                    </div>
+                    <div class="message received">
+                        <p>Of course! The substitution method involves solving for one variable in terms of the other, and then substituting that expression into the second equation.</p>
+                        <p>For example, if you have:</p>
+                        <p>x + 2y = 7</p>
+                        <p>3x - y = 8</p>
+                        <p>You can solve the first equation for x: x = 7 - 2y</p>
+                        <p>Then substitute this into the second equation:</p>
+                        <p>3(7 - 2y) - y = 8</p>
+                        <p>21 - 6y - y = 8</p>
+                        <p>21 - 7y = 8</p>
+                        <p>-7y = -13</p>
+                        <p>y = 13/7</p>
+                        <p>Then substitute back to find x.</p>
+                        <span class="timestamp">10:35 AM</span>
+                    </div>
+                    <div class="message sent">
+                        <p>That makes more sense, thank you!</p>
+                        <span class="timestamp">10:36 AM</span>
+                    </div>
+                    <div class="message received">
+                        <p>You're welcome! Let me know if you need help with anything else.</p>
+                        <span class="timestamp">10:37 AM</span>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="message-input" placeholder="Type your message here...">
+                    <button id="send-button">Send</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Chat functionality
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        // Function to add a new message to the chat
+        function addMessage(content, isSent) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isSent ? 'message sent' : 'message received';
+            
+            const messageContent = document.createElement('p');
+            messageContent.textContent = content;
+            messageDiv.appendChild(messageContent);
+            
+            const timestamp = document.createElement('span');
+            timestamp.className = 'timestamp';
+            
+            // Format current time
+            const now = new Date();
+            const hours = now.getHours() % 12 || 12;
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+            timestamp.textContent = `${hours}:${minutes} ${ampm}`;
+            
+            messageDiv.appendChild(timestamp);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to the latest message
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Send message when Send button is clicked
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                messageInput.value = '';
+                
+                // Simulate teacher response after a short delay
+                setTimeout(() => {
+                    // Simple response system
+                    let response;
+                    if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+                        response = "Hello! How can I help you today?";
+                    } else if (message.toLowerCase().includes('thank')) {
+                        response = "You're welcome!";
+                    } else if (message.toLowerCase().includes('homework') || message.toLowerCase().includes('assignment')) {
+                        response = "Is there a specific assignment you're having trouble with?";
+                    } else {
+                        response = "I'll help you with that. Let me get back to you with more information soon.";
+                    }
+                    addMessage(response, false);
+                }, 1000);
+            }
+        });
+        
+        // Send message when Enter key is pressed
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>

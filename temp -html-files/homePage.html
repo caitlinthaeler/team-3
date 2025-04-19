@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Platform - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Educational Platform</div>
+            <div class="nav-links">
+                <a href="homePage.html" class="active">Home</a>
+                <a href="tutorialPage.html">Tutorials</a>
+                <a href="taskPage.html">Tasks</a>
+                <a href="chatPage.html">Chat</a>
+                <a href="gamePage.html">Games</a>
+            </div>
+            <div class="user-profile">
+                <span>👤 Student</span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-item">
+                <div class="sidebar-icon">N</div>
+                <div>Notes</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">A</div>
+                <div>Assignments</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">G</div>
+                <div>Grades</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">R</div>
+                <div>Resources</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-icon">S</div>
+                <div>Settings</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1>My Courses</h1>
+            
+            <!-- Course cards with links to tutorial page -->
+            <a href="tutorialPage.html?course=math" class="course-link">
+                <div class="course-card">
+                    <div class="course-icon">M</div>
+                    <div class="course-info">
+                        <h3>Mathematics 101</h3>
+                        <p>Introduction to Algebra and Geometry</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="tutorialPage.html?course=science" class="course-link">
+                <div class="course-card">
+                    <div class="course-icon">S</div>
+                    <div class="course-info">
+                        <h3>Science 101</h3>
+                        <p>Basic Physics and Chemistry</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="tutorialPage.html?course=english" class="course-link">
+                <div class="course-card">
+                    <div class="course-icon">E</div>
+                    <div class="course-info">
+                        <h3>English 101</h3>
+                        <p>Grammar and Composition</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </main>
+    </div>
+
+    <script>
+        // Add click functionality to course cards
+        document.querySelectorAll('.course-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Allow default behavior (navigate to href)
+                // The course parameter will be passed to the tutorial page
+            });
+        });
+    </script>
+</body>
+</html>
