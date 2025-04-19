@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from admin_route.views import saved_tutorials
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -7,5 +8,5 @@ urlpatterns = [
     path('game/', views.game, name='game'),
     path('task/', views.task, name='task'),
     path('settings/', views.settings, name='settings'),
-    path('tutorial/', views.tutorial, name='tutorial'),
+    path('tutorials', views.tutorial, name='tutorial')
 ]

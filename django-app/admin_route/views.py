@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 class Tutorial:
-    def __init__(self, name, file, file_name, type, hint = None, existingGroups=False):
+    def __init__(self, name, file, file_name, type, subject, hint = None, existingGroups=False):
         self.name = name
         self.file = file
         self.file_name = file_name
@@ -10,6 +10,7 @@ class Tutorial:
         self.existingGroups = existingGroups
         self.hint = hint
         self.submissions = []
+        self.subject = subject
 
     def add_submission(self, submission):
         self.submissions.append(submission)
@@ -23,6 +24,7 @@ def make_admin_tutorial(request):
         tutorial_type = request.POST.get('ass_type')
         existing_groups = request.POST.get('groups') == 'yes'
         uploaded_file = request.FILES.get('fileUpload')
+        subject = request.POST.get('subject')
 
         # Create instance of your Tutorial class
         tutorial = Tutorial(
@@ -31,7 +33,8 @@ def make_admin_tutorial(request):
             file_name = uploaded_file.name,
             type=tutorial_type,
             hint=hint,
-            existingGroups=existing_groups
+            existingGroups=existing_groups,
+            subject=subject
         )
 
         saved_tutorials.append(tutorial)
@@ -42,7 +45,8 @@ def make_admin_tutorial(request):
             'file_name': tutorial.file_name,
             'type': tutorial.type,
             'hint': tutorial.hint,
-            'existingGroups': tutorial.existingGroups
+            'existingGroups': tutorial.existingGroups,
+            'subject': tutorial.subject
         }
 
         return redirect('success')
