@@ -39,142 +39,26 @@
         </aside>
 
         <main class="main-content">
-            <div id="math-tutorials" class="course-tutorials">
-                <h1>Mathematics 101 - Tutorial</h1>
-                <div class="tutorial-steps">
-                    <div class="step">
-                        <h3>Step 1: Introduction to Algebra</h3>
-                        <div class="step-content">
-                            <p>Learn the basic concepts of algebra including variables, expressions, and equations.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 100%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=math&task=1" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 2: Solving Linear Equations</h3>
-                        <div class="step-content">
-                            <p>Master the techniques for solving single-variable linear equations.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 80%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=math&task=2" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 3: Graphing Functions</h3>
-                        <div class="step-content">
-                            <p>Learn how to plot and interpret graphs of linear functions.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 50%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=math&task=3" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 4: Systems of Equations</h3>
-                        <div class="step-content">
-                            <p>Understand how to solve systems of linear equations using various methods.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 20%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=math&task=4" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="science-tutorials" class="course-tutorials" style="display: none;">
-                <h1>Science 101 - Tutorial</h1>
-                <div class="tutorial-steps">
-                    <div class="step">
-                        <h3>Step 1: Basic Physics Concepts</h3>
-                        <div class="step-content">
-                            <p>Learn about force, motion, and Newton's laws.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 90%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=science&task=1" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 2: Chemistry Fundamentals</h3>
-                        <div class="step-content">
-                            <p>Introduction to atoms, molecules, and chemical reactions.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=science&task=2" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 3: Laboratory Safety</h3>
-                        <div class="step-content">
-                            <p>Best practices for safe experimentation in the lab.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 30%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=science&task=3" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="english-tutorials" class="course-tutorials" style="display: none;">
-                <h1>English 101 - Tutorial</h1>
-                <div class="tutorial-steps">
-                    <div class="step">
-                        <h3>Step 1: Grammar Essentials</h3>
-                        <div class="step-content">
-                            <p>Master parts of speech and sentence structure.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 100%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=english&task=1" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 2: Effective Writing</h3>
-                        <div class="step-content">
-                            <p>Learn to craft engaging paragraphs and essays.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 85%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=english&task=2" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <h3>Step 3: Literary Analysis</h3>
-                        <div class="step-content">
-                            <p>Techniques for analyzing and interpreting literature.</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 70%;"></div>
-                            </div>
-                            <div class="step-actions">
-                                <a href="taskPage.html?course=english&task=3" class="btn">Go to Tasks</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <h1>Settings</h1>
+            <div class="settings-section">
+                <h2>Account Settings</h2>
+                <form id="account-settings-form">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="Student123" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </form>
+                <h2>Themes</h2>
+                <form id="theme-form">
+                    <label for="theme">Select Theme:</label>
+                    <select id="theme" name="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </form>
             </div>
         </main>
     </div>
