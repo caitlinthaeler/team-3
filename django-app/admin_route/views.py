@@ -30,4 +30,7 @@ def make_admin_tutorial(request):
             existingGroups=existing_groups
         )
         return redirect('success')
-    return redirect('admin_tutorial')
+    return render(request, 'admin_tutorial.html')
+
+def display_sucess(request):
+    render(request, 'success.html')
