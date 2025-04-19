@@ -29,8 +29,19 @@ def make_admin_tutorial(request):
             hint=hint,
             existingGroups=existing_groups
         )
+
+        # Store the relevant data in session
+        request.session['tutorial_data'] = {
+            'name': tutorial.name,
+            'file_name': tutorial.file.name if tutorial.file else 'No file uploaded',
+            'type': tutorial.type,
+            'hint': tutorial.hint,
+            'existingGroups': tutorial.existingGroups
+        }
+
         return redirect('success')
     return render(request, 'admin_tutorial.html')
 
-def display_sucess(request):
-    render(request, 'success.html')
+def display_success(request):
+    tutorial_data = request.session.get('tutorial_data')
+    return render(request, 'success.html', {'tutorial': tutorial_data})
