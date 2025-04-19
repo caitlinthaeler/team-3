@@ -14,3 +14,6 @@ def student_dashboard(request):
 
 def admin_tutorial(request):
     return render(request, 'admin_tutorial.html')
+
+def success(request):
+    return render(request, 'success.html')
