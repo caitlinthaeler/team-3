@@ -1012,3 +1012,93 @@ select {
         flex-direction: column;
     }
 }
+
+/* Tutorial Creation Admin Page Styles */
+.main-content.admin-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.admin-form h1 {
+    margin-bottom: 25px;
+}
+
+.admin-form form div {
+    margin-bottom: 20px;
+}
+
+.admin-form label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="file"] {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.admin-form input[type="radio"],
+.admin-form input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.admin-form input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.admin-form input[type="submit"]:hover {
+    background-color: #3b78e7;
+}
+
+#existing {
+    margin-top: 10px;
+    padding: 10px;
+    border-left: 3px solid var(--primary-color);
+    background-color: var(--hover-bg);
+    border-radius: 5px;
+}
+
+/* Admin Navigation Styles */
+.nav-links a.admin-link {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark theme adjustments for admin page */
+body.dark-theme .admin-form input[type="text"],
+body.dark-theme .admin-form input[type="file"] {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-color: #555;
+}
+
+body.dark-theme #existing {
+    background-color: var(--hover-bg);
+}
+
+/* Responsive design for admin form */
+@media (max-width: 768px) {
+    .main-content.admin-form {
+        padding: 20px;
+    }
+    
+    .admin-form input[type="submit"] {
+        width: 100%;
+    }
+}

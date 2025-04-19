@@ -1,49 +1,78 @@
-<html>
-    <head>
-        <title>Create a new Tutorial</title>
-        <script>
-            function toggleGroupsCheckbox() {
-                const collab = document.getElementById("collaborative");
-                const existing = document.getElementById("existing");
-
-                if (collab.checked) {
-                    existing.style.display = "block";
-                } else {
-                    existing.style.display = "none";
-                }
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Platform - Create Tutorial</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        function toggleGroupsCheckbox() {
+            const collab = document.getElementById("collaborative");
+            const existing = document.getElementById("existing");
+            
+            if (collab.checked) {
+                existing.style.display = "block";
+            } else {
+                existing.style.display = "none";
             }
-        </script>
-    </head>
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Educational Platform</div>
+            <div class="nav-links">
+                <a href="homePage.html">Home</a>
+                <a href="chatPage.html">Chat</a>
+                <a href="gamePage.html">Games</a>
+                <a href="settingsPage.html">Settings</a>
+                <a href="#" class="admin-link">Admin</a>
+            </div>
+            <div class="user-profile">
+                <span>Admin Account</span>
+            </div>
+        </nav>
+    </header>
 
-    <body>
-        <h1>Create a new Tutorial</h1>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div id="tutorial_title">
-                <label for="fname">Enter Title: </label>
-                <input type="text" id="fname" name="fname"><br>
-            </div>
-            <div id="file">
-                <label for="fileUpload" > Upload Instructions </label><br>
-                <input type="file" id="fileUpload" name = "fileUpload"/><br>
-            </div>
-            <div id="hints">
-                <label for="hint">Add a hint for this tutorial:</label><br>
-                <input type="text" id="hint" name="hint">
-            </div>
-            <div id="tutorial_type">
-                <label>Tutorial Type: </label>
-                <input type="radio" id="individual" name="ass_type" value="individual" onclick="toggleGroupsCheckbox()" checked>
-                <label for="individual">individual</label>
-                <input type="radio" id="collaborative" name="ass_type" value="collaborative" onclick="toggleGroupsCheckbox()">
-                <label for="collaborative">collaborative</label><br>
-                <div id = "existing" style="display: none;">
-                    <label for="groups">Use Existing Groups?</label>
-                    <input type="checkbox" id="groups" name="groups" value="yes">
+    <div class="container">
+        <main class="main-content admin-form">
+            <h1>Create a new Tutorial</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="tutorial_title">
+                    <label for="fname">Enter Title:</label>
+                    <input type="text" id="fname" name="fname" placeholder="Tutorial title">
                 </div>
-
-                <br><input type="submit" value="Submit">
-            </div>
-        </form>
-    </body>
+                
+                <div id="file">
+                    <label for="fileUpload">Upload Instructions</label>
+                    <input type="file" id="fileUpload" name="fileUpload"/>
+                </div>
+                
+                <div id="hints">
+                    <label for="hint">Add a hint for this tutorial:</label>
+                    <input type="text" id="hint" name="hint" placeholder="Provide a helpful hint">
+                </div>
+                
+                <div id="tutorial_type">
+                    <label>Tutorial Type:</label><br>
+                    <input type="radio" id="individual" name="ass_type" value="individual" onclick="toggleGroupsCheckbox()" checked>
+                    <label for="individual">Individual</label>
+                    
+                    <input type="radio" id="collaborative" name="ass_type" value="collaborative" onclick="toggleGroupsCheckbox()">
+                    <label for="collaborative">Collaborative</label>
+                    
+                    <div id="existing" style="display: none;">
+                        <label for="groups">Use Existing Groups?</label>
+                        <input type="checkbox" id="groups" name="groups" value="yes">
+                    </div>
+                    
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
 </html>
