@@ -17,3 +17,4 @@ def admin_tutorial(request):
 
 def success(request):
     return render(request, 'success.html')
+
