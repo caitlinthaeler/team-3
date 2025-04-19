@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Login Role</title>
+</head>
+<body>
+    <h2>Login As</h2>
+    <form action="{% url 'login_teacher' %}" method="get" style="display:inline;">
+        <button type="submit">Teacher</button>
+    </form>
+    <form action="{% url 'login_student' %}" method="get" style="display:inline;">
+        <button type="submit">Student</button>
+    </form>
+</body>
+</html>
